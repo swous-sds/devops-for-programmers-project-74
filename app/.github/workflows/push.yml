@@ -9,29 +9,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '21'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: make ci
+      - name: Run tests
+        run: make ci
 
-    - name: Build Docker image
-      run: docker build -f Dockerfile.production -t swoushtein/devops-for-programmers-project-74:latest .
+      - name: Build Docker image
+        run: docker build -f Dockerfile.production -t swoushtein/devops-for-programmers-project-74:latest .
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Push Docker image
-      run: docker push swoushtein/devops-for-programmers-project-74:latest
+      - name: Push Docker image
+        run: docker push swoushtein/devops-for-programmers-project-74:latest
