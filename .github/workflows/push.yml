@@ -1,0 +1,29 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'  # Используйте стабильную LTS версию
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: make ci
+
+      - name: Check Docker version
+        run: docker --
+
