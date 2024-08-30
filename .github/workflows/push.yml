@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: '21'
 
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep tag_name | cut -d '"' -f 4)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Install dependencies
         run: npm install
@@ -36,5 +40,6 @@ jobs:
 
       - name: Push Docker image
         run: docker push swoushtein/devops-for-programmers-project-74:latest
+
 
 
