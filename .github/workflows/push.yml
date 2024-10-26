@@ -1,3 +1,13 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,16 +21,18 @@ jobs:
         with:
           node-version: '21'
 
-      - name: List files in the working directory
-        run: ls -la
-
-      - name: Install Docker Compose
+      # Устанавливаем Docker и Docker Compose
+      - name: Set up Docker Buildx (for Docker Compose support)
         uses: docker/setup-buildx-action@v2
+
+      # Проверяем установку Docker и Docker Compose
+      - name: Check Docker Compose version
+        run: docker-compose version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
+      - name: Run tests with Docker Compose
         run: docker-compose -f docker-compose.yml run app npm test
 
       - name: Build Docker image
@@ -34,15 +46,6 @@ jobs:
 
       - name: Push Docker image
         run: docker push swoushtein/devops-for-programmers-project-74:latest
-
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 
 
