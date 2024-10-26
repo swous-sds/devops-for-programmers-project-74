@@ -41,5 +41,3 @@ jobs:
       - name: Push Docker image
         run: docker push swoushtein/devops-for-programmers-project-74:latest
 
-
-
